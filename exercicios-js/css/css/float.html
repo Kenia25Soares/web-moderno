@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Float</title>
+    <style>
+        body {
+            background-color: #222;
+        }
+
+        .c1 {
+            background-color: red;
+            float: right; /* vai fazer com que o elemento flutue para a direita */
+        }
+
+        .c2 {
+            background-color: green;
+            clear: right; /* vai fazer com que o elemento fique abaixo do elemento que flutua para a direita */
+            float: left; /* vai fazer com que o elemento flutue para a esquerda */
+        }
+
+        .c3 {
+            background-color: blue;
+            clear: both; /* vai fazer com que o elemento fique abaixo de todos os elementos que flutuam */
+        }
+
+        .c4 {
+            background-color: orange;
+            float: right;
+        }
+
+        div {
+            height: 150px;
+            width: 150px;
+            /* float: right;  // vai fazer com que o elemento flutue para a direita */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="c1"></div>
+    <div class="c2"></div>
+    <div class="c3"></div>
+    <div class="c4"></div>
+</body>
+
+</html>

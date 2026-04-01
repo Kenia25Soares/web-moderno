@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Especificidade CSS</title>
+    <style>
+        /* https://developer.mozilla.org/pt-BR/docs/Web/CSS/Specificity */
+
+        /*
+            Em linhas gerais...
+
+            1. regra com !important  // tem prioridade sobre as outras regras, mas não é recomendado usar, pois pode causar confusão e dificultar a
+            manutenção do código
+            2. seletores mais específicos  // quanto mais específico for o seletor, mais prioridade ele terá sobre os outros, por exemplo, um seletor de
+            ID tem mais prioridade do que um seletor de classe, que tem mais prioridade do que um seletor de tag
+            3. última regra processada (empate)  // se duas regras tiverem a mesma especificidade, a última regra processada pelo navegador terá
+            prioridade sobre as outras
+        */
+
+        p {
+            background-color: #aaa;
+        }
+
+        /*
+        p.observacao é mais específico que .observacao,
+        porém o padding da classe (.observacao) tem prioridade
+        porque foi usado !important (não recomendado em boas práticas)
+        */
+        .observacao {
+            background-color: #5F5;
+            border: dashed 5px;
+            padding: 200px!important;
+            font-size: 40px;
+        }
+
+        p.observacao {
+            padding: 2px;
+            background: linear-gradient(to right, red , yellow);
+        }
+    </style>
+</head>
+
+<body>
+    <p class='observacao'>Olha essa observação!!!!</p>
+</body>
+
+</html>
