@@ -20,42 +20,56 @@
 
 <body class="conteudo">
     <nav>
-        <a href wm-link="series.html" wm-destino=".pagina">Séries</a> |
-        <a href wm-link="linguagens.html" wm-destino=".pagina">Linguagens</a>
+        <a href="series.html" wm-link="partials/series.html" wm-destino=".pagina">Séries</a> |
+        <a href="linguagens.html" wm-link="partials/linguagens.html" wm-destino=".pagina">Linguagens</a>
     </nav>
     <div class="pagina"></div>
     <script>
-        function navegarViaAjax(url, seletor, push = true) {
-            if(!url || !seletor) return
+        function urlParaFragmento(href) {
+            const name = new URL(href, window.location.origin).pathname.split('/').pop() || ''
+            if (name === 'series.html') return 'partials/series.html'
+            if (name === 'linguagens.html') return 'partials/linguagens.html'
+            return null
+        }
+
+        function navegarViaAjax(urlFragmento, seletor, push = true, historyUrl = null) {
+            if(!urlFragmento || !seletor) return
             const elemento = document.querySelector(seletor)
-            fetch(url)
+            fetch(urlFragmento)
                 .then(resp => resp.text())
                 .then(html => {
                     elemento.innerHTML = html
                     if(push) {
-                        history.pushState({ seletor }, "Página Ajax", url)
+                        history.pushState({ seletor }, "Página Ajax", historyUrl || urlFragmento)
                     }
                 })
         }
 
         document.querySelectorAll('[wm-link]').forEach(link => {
-            const url = link.attributes['wm-link'].value
+            const urlFragmento = link.attributes['wm-link'].value
             const seletorDestino = link.attributes['wm-destino'].value
+            const historyUrl = link.getAttribute('href')
 
             link.onclick = e => {
                 e.preventDefault()
-                navegarViaAjax(url, seletorDestino)
+                navegarViaAjax(urlFragmento, seletorDestino, true, historyUrl)
             }
         })
 
-        // O evento popstate é que muda o estado do histórico, ou seja, quando o usuário clicar no botão de voltar ou avançar do navegador, esse evento é disparado.
-        // O objeto de evento (e) tem uma propriedade state que contém o estado associado à entrada do histórico. Se e.state for verdadeiro, significa que há um estado
-        // associado à entrada do histórico atual, e a função navegarViaAjax é chamada para carregar o conteúdo correspondente à URL atual (window.location.href) usando o
-        //  seletor armazenado em e.state.seletor. O terceiro argumento false indica que a navegação não deve adicionar uma nova entrada ao histórico.
         window.onpopstate = e => {
             if(e.state) {
-                navegarViaAjax(window.location.href, e.state.seletor, false)
+                const fragmento = urlParaFragmento(window.location.href)
+                if (fragmento) {
+                    navegarViaAjax(fragmento, e.state.seletor, false)
+                }
             }
         }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const fragmento = urlParaFragmento(window.location.href)
+            if (fragmento) {
+                navegarViaAjax(fragmento, '.pagina', false)
+            }
+        })
     </script>
 </body>

@@ -1,6 +1,13 @@
+const path = require('path')
 const bodyParser = require('body-parser')
 const express = require('express')
 const app = express()
+
+// Mini SPA: URLs (series.html / linguagens.html) servem o shell com CSS;
+// o HTML parcial fica em spa/partials/ e é carregado por fetch a partir do index.
+const spaIndex = path.join(__dirname, 'spa', 'index.html')
+app.get('/spa/series.html', (req, res) => res.sendFile(spaIndex))
+app.get('/spa/linguagens.html', (req, res) => res.sendFile(spaIndex))
 
 app.use(express.static('.'))
 app.use(bodyParser.urlencoded({ extended: true}))
