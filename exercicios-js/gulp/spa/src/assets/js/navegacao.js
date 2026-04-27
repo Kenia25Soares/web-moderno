@@ -10,10 +10,9 @@
     function navegarViaAjax(hash) {
         if (!hash) return
 
-        const link = document.querySelector(`[wm-link='${hash}']`)
         const destino = document.querySelector('[wm-link-destino]')
 
-        const url = hash.substring(1)
+        const url = hash.replace(/^#\/?/, '')
         fetch(url)
             .then(resp => resp.text())
             .then(html => {
