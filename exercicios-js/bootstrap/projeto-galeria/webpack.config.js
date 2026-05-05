@@ -40,7 +40,7 @@ module.exports = {
                 MiniCssExtractPlugin.loader,
                 // 'style-loader', // Adiciona CSS a DOM injetando a tag <style>
                 'css-loader', // interpreta @import, url()...
-                'sass-loader',
+                'sass-loader' // Compila Sass para CSS
             ]
         }, {
             test: /\.(png|svg|jpg|gif)$/,
